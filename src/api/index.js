@@ -240,7 +240,9 @@ exports.getTokenMarketData = async () => {
           }
         );
 
-        const { data: _data } = await result.json();
+        const { code, msg, data: _data } = await result.json();
+
+        if (code !== "0") throw msg;
 
         const [{ lastPrice, circulatingSupply }] = _data;
 
@@ -254,6 +256,63 @@ exports.getTokenMarketData = async () => {
 
     response = {
       ...response,
+      success: true,
+    };
+  } catch (error) {
+    response = {
+      ...response,
+      error: `${error}`,
+    };
+  } finally {
+    return response;
+  }
+};
+
+exports.postAddressActivityWebhookTracker = async () => {
+  let response = {
+    data: {},
+    error: "",
+    success: false,
+  };
+
+  try {
+    const result = await fetch(
+      `${baseURL}/explorer/webhook/create-address-activity-tracker`,
+      {
+        headers,
+        method: "POST",
+        body: {
+          event: "tokenTransfer",
+          chainShortName: "eth",
+          webhookUrl: "your-own-webhook",
+          trackerName: "address-activity-tracker",
+          addresses: [
+            "0xceb69f6342ece283b2f5c9088ff249b5d0ae66ea",
+            "0x21a31ee1afc51d94c2efccaa2092ad1028285549",
+          ],
+          tokenContractAddress: [
+            "0xdac17f958d2ee523a2206206994597c13d831ec7",
+            "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+          ],
+          valueUsdFilter: {
+            minValueUsd: "10000",
+            maxValueUsd: "100000",
+          },
+          amountFilter: {
+            minAmount: "23",
+            maxAmount: "40",
+          },
+        },
+      }
+    );
+
+    const { msg, code, data } = await result.json();
+
+    if (code !== "0") throw msg;
+
+    response = {
+      data,
+      error: "",
       success: true,
     };
   } catch (error) {

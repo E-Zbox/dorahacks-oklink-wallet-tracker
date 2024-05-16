@@ -5,6 +5,7 @@ const {
   getTokenMarketDataController,
   getNativeTokenBalanceInActiveChainsController,
   getAddTransactionListController,
+  postAddressActivityWebhookTrackerController,
 } = require("../controllers");
 
 const Router = express.Router();
@@ -23,5 +24,8 @@ Router.get("/tokens/marketdata", getTokenMarketDataController);
 
 // Task 1: #4
 Router.get("/address/latest/transaction", getAddTransactionListController);
+
+// Task 1: #5
+Router.get("/webhook/tracker", postAddressActivityWebhookTrackerController);
 
 module.exports = Router;

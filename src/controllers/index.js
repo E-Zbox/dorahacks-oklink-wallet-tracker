@@ -170,3 +170,24 @@ exports.getAddTransactionListController = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Task 1: #5
+ * Implement a webhook to monitor token transfer events for the address on the chain.
+ */
+exports.postAddressActivityWebhookTrackerController = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const { data, error, success } =
+      await this.postAddressActivityWebhookTrackerController();
+
+    if (!success) throw error;
+
+    return res.status(200).json({ data, error, success });
+  } catch (error) {
+    next(error);
+  }
+};
