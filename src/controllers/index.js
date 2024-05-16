@@ -7,6 +7,7 @@ const {
   getTokenAddressInformation,
   getAddressTransactionList,
   tokenToEthereumAddress,
+  postAddressActivityWebhookTracker,
 } = require("../api");
 
 // Task 1: #1 Identify the EVM active chains where the address has transactions.
@@ -181,8 +182,7 @@ exports.postAddressActivityWebhookTrackerController = async (
   next
 ) => {
   try {
-    const { data, error, success } =
-      await this.postAddressActivityWebhookTrackerController();
+    const { data, error, success } = await postAddressActivityWebhookTracker();
 
     if (!success) throw error;
 
