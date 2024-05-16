@@ -15,6 +15,12 @@ exports.tokenToEthereumAddress = {
   USDT,
 };
 
+const tokenToEthereumAddress = {
+  DAI,
+  PEPE,
+  USDT,
+};
+
 if (!OKLINK_API_KEY) {
   throw new Error("Configure env variables");
 }
